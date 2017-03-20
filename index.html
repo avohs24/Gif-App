@@ -43,7 +43,7 @@
   <!-- jQuery -->
 <script type="text/javascript">  
 
-var gifArray = ['dog', 'cat', 'rabbit', 'turtle', 'skunk'];
+var gifArray = ['love', 'hate', 'laugh', 'live', 'drake'];
 
 
   for(var i = 0; i < gifArray.length; i++){
@@ -85,7 +85,7 @@ $("button").on('click', function(){
 
             var image = $("<img>");
             image.attr("src", results[i].images.fixed_height.url);
-            image.attr('id', 'newImages');
+            image.attr('class', 'newImages');
 
             gifDiv.prepend(p);
             gifDiv.prepend(image);
