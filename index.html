@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Gif App</title>
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+ <!--  <script type="text/javascript" src='java/app.js'></script> -->
+
+</head>
+
+<body>
+
+
+
+
+<input type="text" id='userInput'>
+
+<div id= "buttonArea"></div>
+<button type="submit" id="submitButton">Submit</button>
+
+<div id="displayArea"></div>
+
+
+  <!-- jQuery -->
+<script type="text/javascript">  
+var gifArray = ['dog', 'cat', 'rabbit', 'turtle', 'skunk'];
+// var gifDiv = $('#displayArea');
+
+  for(var i = 0; i < gifArray.length; i++){
+    var gifButtons = $('<button>');
+   
+
+    gifButtons.html(gifArray[i]);
+    $('#displayArea').append(gifButtons);
+    console.log(gifArray[i]);
+  }
+
+
+//function for click on buttons already on page
+$("button").on('click', function(){
+  var buttonVal = $(this).val();
+  console.log(buttonVal);
+
+//hooking into Giphy API 
+  var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
+        buttonVal + "&api_key=dc6zaTOxFJmzC&limit=10";
+
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  })
+  .done(function(response){
+    var results = response.data; 
+
+      for(var i = 0; i < results.length; i++) {
+        var gifDiv = $("<div class = item>");
+
+        var rating = results[i].rating;
+
+        var p = $("<p>").text("Rating: " + rating);
+
+        var image = $("<img>");
+        image.attr("src", results[i].images.fixed_height.url);
+
+        gifDiv.append(p);
+        gifDiv.append(image);
+
+        $('#displayArea').append(gifDiv);
+
+      }
+
+  })
+
+})
+
+
+
+
+//function for submit button and creating new button on DOM
+var buttonCount = 0; 
+
+$('#submitButton').on('click', function(event) {
+  newAnimal = $('#userInput').val().trim();
+  var newButton = $('<button>');
+
+  newButton.attr("id", "button-" + buttonCount);
+  newButton.html(newAnimal);
+  console.log(newAnimal);
+
+  gifArray.push(newAnimal);
+
+  printButton = $('#buttonArea').append('<button>' + newAnimal);
+
+  console.log(gifArray);
+
+  buttonCount++;
+
+
+})
+
+
+
+
+//function for pushing user input to gifArray 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
