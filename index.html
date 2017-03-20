@@ -42,13 +42,15 @@
 
   <!-- jQuery -->
 <script type="text/javascript">  
+
 var gifArray = ['dog', 'cat', 'rabbit', 'turtle', 'skunk'];
-// var gifDiv = $('#displayArea');
+
 
   for(var i = 0; i < gifArray.length; i++){
-    var gifButtons = $('<button class="btn btn-info">');
+    var gifButtons = $('<button>');
     gifButtons.attr('data-animal', gifArray[i]);
     gifButtons.attr('id', 'animalButtons');
+    gifButtons.addClass('btn btn-info');
    
 
     gifButtons.html(gifArray[i]);
@@ -66,47 +68,45 @@ $("button").on('click', function(){
   var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
         buttonVal + "&api_key=dc6zaTOxFJmzC&limit=10";
 
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  })
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      })
 
-  .done(function(response){
-    var results = response.data; 
+      .done(function(response){
+        var results = response.data; 
 
-      for(var i = 0; i < results.length; i++) {
-        var gifDiv = $("<div>");
+          for(var i = 0; i < results.length; i++) {
+            var gifDiv = $("<div>");
 
-        var rating = results[i].rating;
+            var rating = results[i].rating;
 
-        var p = $("<p>").text("Rating: " + rating);
+            var p = $("<p>").text("Rating: " + rating);
 
-        var image = $("<img>");
-        image.attr("src", results[i].images.fixed_height.url);
-        image.attr('id', 'newImages');
+            var image = $("<img>");
+            image.attr("src", results[i].images.fixed_height.url);
+            image.attr('id', 'newImages');
 
-        gifDiv.prepend(p);
-        gifDiv.prepend(image);
+            gifDiv.prepend(p);
+            gifDiv.prepend(image);
 
-        $('#displayArea').prepend(gifDiv);
+            $('#displayArea').prepend(gifDiv);
 
-      }
+          }
 
-  })
+      })
 
 })
-
-
-
 
 //function for submit button and creating new button on DOM
 
 $('#submitButton').on('click', function(event) {
   var newAnimal = $('#userInput').val().trim();
-  var newButton = $('<button class="btn btn-info">' + newAnimal);
+  var newButton = $('<button>' + newAnimal);
 
   newButton.attr('data-animal', newAnimal);
   newButton.attr('id', 'animalButtons');
+  newButton.addClass('btn btn-info');
 
   newButton.html(newAnimal);
   console.log(newAnimal);
