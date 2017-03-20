@@ -15,15 +15,30 @@
 <body>
 
 
+<div class="container">
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="col-md-8">
+
+          <div id="displayArea"></div>
+
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="jumbotron">
+            <div id= "buttonArea"></div>            
+          <br>
+            <input type="text" id='userInput'>
 
 
-<input type="text" id='userInput'>
+            <input type="submit" id="submitButton" class="btn btn-info">
+        </div>
+    </div>
+  </div>
+</div>
 
-<div id= "buttonArea"></div>
-<button type="submit" id="submitButton">Submit</button>
-
-<div id="displayArea"></div>
-
+       
 
   <!-- jQuery -->
 <script type="text/javascript">  
@@ -31,18 +46,20 @@ var gifArray = ['dog', 'cat', 'rabbit', 'turtle', 'skunk'];
 // var gifDiv = $('#displayArea');
 
   for(var i = 0; i < gifArray.length; i++){
-    var gifButtons = $('<button>');
+    var gifButtons = $('<button class="btn btn-info">');
+    gifButtons.attr('data-animal', gifArray[i]);
+    gifButtons.attr('id', 'animalButtons');
    
 
     gifButtons.html(gifArray[i]);
-    $('#displayArea').append(gifButtons);
+    $('#buttonArea').append(gifButtons);
     console.log(gifArray[i]);
   }
 
 
 //function for click on buttons already on page
 $("button").on('click', function(){
-  var buttonVal = $(this).val();
+  var buttonVal = $(this).attr('data-animal');
   console.log(buttonVal);
 
 //hooking into Giphy API 
@@ -53,11 +70,12 @@ $("button").on('click', function(){
     url: queryURL,
     method: "GET"
   })
+
   .done(function(response){
     var results = response.data; 
 
       for(var i = 0; i < results.length; i++) {
-        var gifDiv = $("<div class = item>");
+        var gifDiv = $("<div>");
 
         var rating = results[i].rating;
 
@@ -65,11 +83,12 @@ $("button").on('click', function(){
 
         var image = $("<img>");
         image.attr("src", results[i].images.fixed_height.url);
+        image.attr('id', 'newImages');
 
-        gifDiv.append(p);
-        gifDiv.append(image);
+        gifDiv.prepend(p);
+        gifDiv.prepend(image);
 
-        $('#displayArea').append(gifDiv);
+        $('#displayArea').prepend(gifDiv);
 
       }
 
@@ -81,23 +100,23 @@ $("button").on('click', function(){
 
 
 //function for submit button and creating new button on DOM
-var buttonCount = 0; 
 
 $('#submitButton').on('click', function(event) {
-  newAnimal = $('#userInput').val().trim();
-  var newButton = $('<button>');
+  var newAnimal = $('#userInput').val().trim();
+  var newButton = $('<button class="btn btn-info">' + newAnimal);
 
-  newButton.attr("id", "button-" + buttonCount);
+  newButton.attr('data-animal', newAnimal);
+  newButton.attr('id', 'animalButtons');
+
   newButton.html(newAnimal);
   console.log(newAnimal);
 
   gifArray.push(newAnimal);
 
-  printButton = $('#buttonArea').append('<button>' + newAnimal);
+  printButton = $('#buttonArea').append(newButton);
 
   console.log(gifArray);
 
-  buttonCount++;
 
 
 })
@@ -105,7 +124,7 @@ $('#submitButton').on('click', function(event) {
 
 
 
-//function for pushing user input to gifArray 
+ 
 
 
 
