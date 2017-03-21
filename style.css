@@ -1,4 +1,38 @@
-.newImages .panel .panel-default img {
+#newImages {
+	border: solid black 3px;
 	float: left;
+	height: 200px;
+	width: 200px;
+	margin: 10px;
 
+}
+
+.rating {
+	float:left;
+}
+
+
+#animalButtons {
+	margin: 5px;
+	border: solid black 1px;
+	margin-top: 30px;
+	opacity: 0.85;
+}
+
+body {
+	background-image: url("dj-khaled.jpg");
+	background-size: 1600px;
+	background-height: 500px;
+	background-repeat: no-repeat;
+}
+
+p {
+	font-size: 15px;
+	font-weight: bolder;
+	text-align: center;
+}
+
+.container .jumbotron {
+	opacity: 0.88;
+	border: solid black 1px;
 }

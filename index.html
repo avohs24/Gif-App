@@ -6,6 +6,7 @@
   <meta charset="UTF-8">
   <title>Gif App</title>
   <script src="https://code.jquery.com/jquery.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
  <!--  <script type="text/javascript" src='java/app.js'></script> -->
@@ -17,22 +18,26 @@
 
 <div class="container">
   <div class="row">
+    <div class="col-md-12">
+        <div id= "buttonArea"></div>
+    </div>
+  <div class="row"> 
     <div class="panel panel-default">
-      <div class="col-md-8">
+      <div class="col-md-9">
+                 <div id="displayArea"></div>
 
-          <div id="displayArea"></div>
 
         </div>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-3">
         <div class="jumbotron">
-            <div id= "buttonArea"></div>            
-          <br>
+           
+          
             <input type="text" id='userInput'>
 
 
-            <input type="submit" id="submitButton" class="btn btn-info">
+            <input type="submit" id="submitButton" class="btn btn-default">
         </div>
     </div>
   </div>
@@ -43,14 +48,14 @@
   <!-- jQuery -->
 <script type="text/javascript">  
 
-var gifArray = ['dog', 'cat', 'skunk', 'monkey', 'turtle'];
+var gifArray = ['DJ Khaled', 'We The Best', 'Another One', 'Major Key', 'Congratulations You Played Yourself', 'Bless Up', 'You Smart'];
 
 
   for(var i = 0; i < gifArray.length; i++){
     var gifButtons = $('<button>');
     gifButtons.attr('data-animal', gifArray[i]);
     gifButtons.attr('id', 'animalButtons');
-    gifButtons.addClass('btn btn-info');
+    gifButtons.addClass('btn btn-default');
    
 
     gifButtons.html(gifArray[i]);
@@ -59,14 +64,14 @@ var gifArray = ['dog', 'cat', 'skunk', 'monkey', 'turtle'];
   }
 
 
-//function for click on buttons already on page
-$("button").on('click', function(){
+// Function for click on buttons already on page
+$("#buttonArea").on('click', 'button', function(){
   var buttonVal = $(this).attr('data-animal');
   console.log(buttonVal);
 
-//hooking into Giphy API 
+  // Hooking into Giphy API 
   var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
-        buttonVal + "&api_key=dc6zaTOxFJmzC&limit=10";
+    buttonVal + "&api_key=dc6zaTOxFJmzC&limit=10";
 
       $.ajax({
         url: queryURL,
@@ -81,13 +86,13 @@ $("button").on('click', function(){
 
             var rating = results[i].rating;
 
-            var p = $("<p>").text("Rating: " + rating);
+            var p = $("<p class=rating>").text("Rating: " + rating);
 
             var image = $("<img>");
             image.attr("src", results[i].images.fixed_height.url);
-            image.attr('class', 'newImages');
+            image.attr('id', 'newImages');
 
-            gifDiv.prepend(p);
+            gifDiv.append(p);
             gifDiv.prepend(image);
 
             $('#displayArea').prepend(gifDiv);
@@ -106,7 +111,7 @@ $('#submitButton').on('click', function(event) {
 
   newButton.attr('data-animal', newAnimal);
   newButton.attr('id', 'animalButtons');
-  newButton.addClass('btn btn-info');
+  newButton.addClass('btn btn-default');
 
   newButton.html(newAnimal);
   console.log(newAnimal);
@@ -117,6 +122,7 @@ $('#submitButton').on('click', function(event) {
 
   console.log(gifArray);
 
+  $('#userInput').val("");
 
 
 })
